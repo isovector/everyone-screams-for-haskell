@@ -1,1 +1,2 @@
-(a ->        a   ) ->    String
+id : a -> a
+id a = a
