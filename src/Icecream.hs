@@ -18,7 +18,7 @@ typeParser = do
   t <- oneOf [ TypeCtr <$> ident
              , parens typeParser
              ]
-  arr <- try (string "->")
+  arr <- try $ trimming $ string "->"
   case arr of
     Just _  -> TypeArr t <$> typeParser
     Nothing -> return t
@@ -26,11 +26,11 @@ typeParser = do
 
 
 ident :: Parser String
-ident = do
+ident = trimming $ do
   c <- satisfy isAlpha
   cs <- many $ satisfy isAlpha
   return $ c : cs
-
+  
 
 icecream :: Parser Type
 icecream = typeParser

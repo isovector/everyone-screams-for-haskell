@@ -64,9 +64,9 @@ string str = do
 
 parens :: Parser a -> Parser a
 parens p = do
-  char '('
+  trimming $ char '('
   result <- p
-  char ')'
+  trimming $ char ')'
   return result
 
 oneOf :: [Parser a] -> Parser a
@@ -74,4 +74,16 @@ oneOf ps = foldl1 (<|>) ps
 
 try :: Parser a -> Parser (Maybe a)
 try p = fmap Just p <|> pure Nothing
+
+trim :: Parser ()
+trim = do
+   many $ char ' ' 
+   return ()
+
+trimming :: Parser a -> Parser a
+trimming pa = do
+    trim
+    a <- pa 
+    trim
+    return a
 
