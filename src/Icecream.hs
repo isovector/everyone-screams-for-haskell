@@ -38,7 +38,7 @@ ident = trimming $ do
   return $ c : cs
   
 
-icecream = parseFunc
+icecream = many parseEverything
 
 parseTypeD :: Parser TypeDecl
 parseTypeD = do
@@ -54,6 +54,14 @@ parseFunc = do
     trimming $ char '='
     c <- ident
     return $ Func a b c
+
+parseEverything :: Parser (TypeDecl, Func)
+parseEverything = do
+    a <- parseTypeD
+    trimming $ char '\n'
+    b <- parseFunc
+    many $ char '\n'
+    return (a, b)
 
 main :: IO ()
 main = do

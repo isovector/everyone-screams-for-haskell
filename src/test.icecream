@@ -1,2 +1,5 @@
 id : a -> a
 id a = a
+
+const : a -> b -> a
+const a b = a

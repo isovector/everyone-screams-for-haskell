@@ -1,4 +1,5 @@
 {-# LANGUAGE InstanceSigs      #-}
+{-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE ViewPatterns      #-}
 
@@ -49,10 +50,13 @@ instance MonadPlus Parser where
 
 
 satisfy :: (Char -> Bool) -> Parser Char
-satisfy pred = Parser $ \(c : s)  ->
-  if pred c
-     then [(c, s)]
-     else empty
+satisfy pred = Parser $ \case 
+    (c : s)  ->
+        if pred c
+        then [(c, s)]
+        else empty
+    _ -> empty
+    
 
 char :: Char -> Parser Char
 char c = satisfy (== c)
