@@ -1,5 +1,3 @@
-id : a -> a
-id a = a
-
-const : a -> b -> a
-const a b = a
+johnny : Int -> Nothing
+johnny = Justx
+johnny = Nothing
